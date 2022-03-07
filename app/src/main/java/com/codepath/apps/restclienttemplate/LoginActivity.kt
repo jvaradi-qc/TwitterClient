@@ -33,10 +33,7 @@ class LoginActivity : OAuthLoginActionBarActivity<TwitterClient>() {
     // OAuth authenticated successfully, launch primary authenticated activity
     // i.e Display application "homepage"
     override fun onLoginSuccess() {
-
-
-        Log.i("John", "Logged in successfully")
-
+        
         val i = Intent(this, TimelineActivity::class.java)
         startActivity(i)
     }
