@@ -33,7 +33,7 @@ class TimelineActivity : AppCompatActivity() {
         swipeContainer = findViewById(R.id.swipeContainer)
 
         swipeContainer.setOnRefreshListener {
-            Log.i(TAG,"Refreshing timeline")
+            //Log.i(TAG,"Refreshing timeline")
             populateHomeTimeline()
         }
 
