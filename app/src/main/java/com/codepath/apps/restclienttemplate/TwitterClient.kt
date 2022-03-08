@@ -1,6 +1,8 @@
 package com.codepath.apps.restclienttemplate
 
 import android.content.Context
+import android.util.Log
+import com.codepath.apps.restclienttemplate.models.Tweet
 import com.codepath.asynchttpclient.RequestParams
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
 import com.codepath.oauth.OAuthBaseClient
@@ -60,6 +62,28 @@ class TwitterClient(context: Context) : OAuthBaseClient(
         val params = RequestParams()
         params.put("count", "25")
         params.put("since_id", 1)
+        client.get(apiUrl, params, handler)
+    }
+
+    fun getUpdatedHomeTimeline(handler: JsonHttpResponseHandler, tweets: ArrayList<Tweet>) {
+        val apiUrl =
+            getApiUrl("statuses/home_timeline.json")
+        val mostRecentId = tweets[0].tweetId
+        val secondLatestTweetId = tweets[1].tweetId
+        val oldestTweetId = tweets.last().tweetId
+        Log.i("TwitterClient", "since_id current value: $mostRecentId")
+        Log.i("TwitterClient", "secondLatestTweetId current value: $secondLatestTweetId")
+        Log.i("TwitterClient", "oldestTweetId current value: $oldestTweetId")
+
+        Log.i("TwitterClient", "tweets list size before refresh: ${tweets.size}")
+
+        // Can specify query string params directly or through RequestParams.
+        val params = RequestParams()
+        params.put("count", "25")
+        //params.put("since_id", "1")
+        params.put("since_id", mostRecentId.toString())
+
+
         client.get(apiUrl, params, handler)
     }
 

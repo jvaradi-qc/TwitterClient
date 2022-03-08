@@ -34,7 +34,8 @@ class TimelineActivity : AppCompatActivity() {
 
         swipeContainer.setOnRefreshListener {
             //Log.i(TAG,"Refreshing timeline")
-            populateHomeTimeline()
+            //populateHomeTimeline()
+            updateHomeTimeline()
         }
 
         // Configure the refreshing colors
@@ -58,7 +59,8 @@ class TimelineActivity : AppCompatActivity() {
         client.getHomeTimeline(object: JsonHttpResponseHandler(){
 
             override fun onSuccess(statusCode: Int, headers: Headers, json: JSON) {
-                Log.i(TAG,"onSuccess reached:")
+                Log.i(TAG,"onSuccess reached: $json")
+
 
                 val jsonArray = json.jsonArray
 
@@ -90,6 +92,48 @@ class TimelineActivity : AppCompatActivity() {
 
         })
     }
+
+    fun updateHomeTimeline() {
+        client.getUpdatedHomeTimeline(object: JsonHttpResponseHandler(){
+
+            override fun onSuccess(statusCode: Int, headers: Headers, json: JSON) {
+                Log.i(TAG,"onSuccess reached:")
+
+                val jsonArray = json.jsonArray
+
+                try {
+                    // clear out our currently fetched tweets so we can get most recent tweets
+                    Log.i(TAG, "tweets list size before refresh: ${tweets.size}")
+
+                    //adapter.clear()
+                    val listOfNewTweetsRetrieved = Tweet.fromJsonArray(jsonArray)
+                    tweets.addAll(0,listOfNewTweetsRetrieved)
+                    adapter.notifyDataSetChanged()
+
+                    // Now we call setRefreshing(false) to signal refresh has finished
+                    swipeContainer.setRefreshing(false)
+                    Log.i(TAG, "tweets list size after refresh: ${tweets.size}")
+
+                } catch (e: JSONException){
+                    Log.e(TAG, "JSON Exception $e")
+                }
+
+            }
+
+            override fun onFailure(
+                statusCode: Int,
+                headers: Headers?,
+                response: String?,
+                throwable: Throwable?
+            ) {
+                Log.i(TAG,"onFailure reached: $statusCode response: $response")
+            }
+
+
+
+        }, tweets)
+    }
+
 
     companion object {
         val TAG = "TimelineActivity"

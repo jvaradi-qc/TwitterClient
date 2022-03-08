@@ -7,6 +7,7 @@ import org.json.JSONObject
 
 class Tweet {
 
+    var tweetId: Long? = null
     var body: String = ""
     var createdAt: String = ""
     var tweetAge: String = ""
@@ -15,6 +16,7 @@ class Tweet {
     companion object {
         fun fromJson(jsonObject: JSONObject) : Tweet {
             val tweet = Tweet()
+            tweet.tweetId = jsonObject.getLong("id")
             tweet.body = jsonObject.getString("text")
             tweet.createdAt = jsonObject.getString("created_at")
             tweet.tweetAge = TimeFormatter.getTimeDifference(jsonObject.getString("created_at"))
