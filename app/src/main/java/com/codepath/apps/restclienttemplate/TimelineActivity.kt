@@ -1,5 +1,6 @@
 package com.codepath.apps.restclienttemplate
 
+import android.media.tv.TvContract
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -27,7 +28,9 @@ class TimelineActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timeline)
-
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setLogo(R.drawable.full_logo)
+        supportActionBar?.setDisplayUseLogoEnabled(true)
         client = TwitterApplication.getRestClient(this)
 
         swipeContainer = findViewById(R.id.swipeContainer)
