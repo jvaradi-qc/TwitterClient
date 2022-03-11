@@ -33,13 +33,15 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://github.com/jvaradi-qc/TwitterClient/blob/master/Demo_TwitterClientApp.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+I found it quite challenging figuring out how to improve the pull to refresh functionality to only pull latest Tweets and add them to the existing list using since_id param.  
+
+Also had a lot of difficulty trying to add a Twitter image icon in place of the text label on the ActionBar.
 
 ## Open-source libraries used
 
@@ -48,7 +50,7 @@ Describe any challenges encountered while building the app.
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [2022] [John Varadi]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
