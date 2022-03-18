@@ -1,17 +1,40 @@
 package com.codepath.apps.restclienttemplate.models
 
+import android.os.Parcelable
 import android.util.Log
+import androidx.room.*
 import com.codepath.apps.restclienttemplate.TimeFormatter
+import kotlinx.parcelize.Parcelize
 import org.json.JSONArray
 import org.json.JSONObject
 
-class Tweet {
+@Parcelize
+@Entity(foreignKeys = arrayOf(
+        ForeignKey(entity = User::class,
+        parentColumns = arrayOf("id"),
+        childColumns = arrayOf("userId"))))
+class Tweet (
 
-    var tweetId: Long? = null
-    var body: String = ""
-    var createdAt: String = ""
-    var tweetAge: String = ""
+    @ColumnInfo
+    @PrimaryKey
+    var tweetId: Long? = null,
+
+    @ColumnInfo
+    var body: String = "",
+
+    @ColumnInfo
+    var createdAt: String = "",
+
+    @ColumnInfo
+    var tweetAge: String = "",
+
+    @ColumnInfo
+    var userId: Long? = null,
+
+    @Ignore
     var user: User? = null
+) :
+    Parcelable {
 
     companion object {
         fun fromJson(jsonObject: JSONObject) : Tweet {
@@ -20,19 +43,25 @@ class Tweet {
             tweet.body = jsonObject.getString("text")
             tweet.createdAt = jsonObject.getString("created_at")
             tweet.tweetAge = TimeFormatter.getTimeDifference(jsonObject.getString("created_at"))
-            tweet.user = User.fromJson(jsonObject.getJSONObject("user"))
+            var user = User.fromJson(jsonObject.getJSONObject("user"))
+            tweet.user = user
+            tweet.userId = user.id
 
             return tweet
         }
 
         fun fromJsonArray(jsonArray: JSONArray) : List<Tweet> {
             val tweets = ArrayList<Tweet>()
+            var tweet : Tweet
             for(i in 0 until jsonArray.length()) {
+                //tweet = fromJson(jsonArray.getJSONObject(i))
+                //Log.i(TAG," Tweet Age: ${tweet.tweetAge}")
                 tweets.add(fromJson(jsonArray.getJSONObject(i)))
                 //Log.i("TweetPos", "$i")
             }
 
             return tweets
         }
+        val TAG = "Tweet"
     }
 }

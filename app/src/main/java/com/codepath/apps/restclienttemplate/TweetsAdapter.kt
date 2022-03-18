@@ -1,5 +1,6 @@
 package com.codepath.apps.restclienttemplate
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,6 +33,8 @@ class TweetsAdapter(val tweets: ArrayList<Tweet>) : RecyclerView.Adapter<TweetsA
         holder.tvUserName.text = tweet.user?.name
         holder.tvTweetBody.text = tweet.body
         holder.tvTweetAge.text = tweet.tweetAge
+        Log.i(TAG,"Tweet body variable value: ${tweet.body}")
+        Log.i(TAG,"Tweet Age variable value: ${tweet.tweetAge}")
 
         //itemview is a view which is a context that can be used
         Glide.with(holder.itemView).load(tweet.user?.publicImageUrl).into(holder.ivProfileImage)
@@ -48,8 +51,8 @@ class TweetsAdapter(val tweets: ArrayList<Tweet>) : RecyclerView.Adapter<TweetsA
     }
 
     // Add a list of items -- change to type used
-    fun addAll(tweetList: List<Tweet>) {
-        tweets.addAll(tweetList)
+    fun addAll(pos: Int, tweetList: List<Tweet>) {
+        tweets.addAll(pos,tweetList)
         notifyDataSetChanged()
     }
 
@@ -62,4 +65,7 @@ class TweetsAdapter(val tweets: ArrayList<Tweet>) : RecyclerView.Adapter<TweetsA
 
     }
 
+    companion object {
+        val TAG = "TweetsAdapter"
+    }
 }
