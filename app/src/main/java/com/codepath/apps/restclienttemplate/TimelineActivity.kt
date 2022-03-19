@@ -47,7 +47,7 @@ class TimelineActivity : AppCompatActivity() {
             //Log.i(TAG,"Refreshing timeline")
             //populateHomeTimeline()
 
-          AsyncTask.execute {
+/*          AsyncTask.execute {
                 Log.i(TAG, "Showing data from database")
                 val tweetWithUsers : List<TweetWithUser>? = tweetDao?.recentItems()
                 val tweetsFromDB : List<Tweet>? = TweetWithUser.getTweetList(tweetWithUsers)
@@ -61,7 +61,7 @@ class TimelineActivity : AppCompatActivity() {
                     adapter.addAll(0,tweetsFromDB)
                 }
 
-            }
+            }*/
 
             updateHomeTimeline()
 
