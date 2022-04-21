@@ -32,7 +32,10 @@ class Tweet (
     var userId: Long? = null,
 
     @Ignore
-    var user: User? = null
+    var user: User? = null,
+
+    @Ignore
+    var videoURL: String = ""
 ) :
     Parcelable {
 
@@ -43,6 +46,24 @@ class Tweet (
             tweet.body = jsonObject.getString("text")
             tweet.createdAt = jsonObject.getString("created_at")
             tweet.tweetAge = TimeFormatter.getTimeDifference(jsonObject.getString("created_at"))
+            if(jsonObject.has("extended_entities")){
+                val extEntities = jsonObject.getJSONObject("extended_entities")
+                val mediaArray = extEntities.getJSONArray("media")
+                val mediaObj = mediaArray.getJSONObject(0)
+                val mediaType = mediaObj.getString("type")
+                if(mediaType == "video"){
+                        Log.i(TAG,"We have a video!")
+                        val video_url = mediaObj.getJSONObject("video_info").getJSONArray("variants").getJSONObject(0).getString("url")
+                        Log.i(TAG,"URL: ${video_url}")
+                        tweet.videoURL = video_url
+                }
+
+
+                Log.i(TAG, "extEntities: ${extEntities}")
+                Log.i(TAG,"mediaArr: ${mediaArray}")
+            }
+
+
             var user = User.fromJson(jsonObject.getJSONObject("user"))
             tweet.user = user
             tweet.userId = user.id
