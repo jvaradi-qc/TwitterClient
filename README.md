@@ -1,5 +1,7 @@
 # Project 2 Part 2 - *TwitterClient*
 
+![Design 1](Design.png “Design 1”)
+
 **TwitterClient** is an android app that allows a user to view his Twitter timeline and post a new tweet. The app utilizes [Twitter REST API](https://dev.twitter.com/rest/public).
 
 Time spent: **X** hours spent in total
